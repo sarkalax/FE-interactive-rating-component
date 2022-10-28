@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Interactive rating component</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    html {
+      font-size: 100%;
+      box-sizing: border-box;
+    }
+    *, *::after, *::before {
+      margin: 0;
+      padding: 0;
+      box-sizing: inherit;
+    }
+    body{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+
+      font-family: 'Overpass', sans-serif;
+      background: hsl(216, 12%, 8%);
+      font-size: 15px;
+      
+    }
+    h1 {
+      color: white;
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+    h2 {
+      color: white;
+    }
+    .rating, .thanks {
+      height: 360px;
+      width: 325px;
+      background: hsl(215, 21%, 16%);
+      border-radius: 20px;
+      padding: 25px;
+    }
+
+    
+    
+    .rating .text {
+      color: hsl(216, 12%, 54%);
+      margin-bottom: 32px;
+      height: 58px;
+      font-size: 15px;
+    }
+    #starIcon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: hsl(213, 19%, 18%);
+      margin-bottom: 25px;
+    }
+    .numbers {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    li {
+      list-style: none; 
+      text-align: center;
+    }
+    li button {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: hsl(213, 19%, 18%);
+      color:hsl(216, 12%, 54%);
+      margin-bottom: 25px;
+      transition: 300ms ease-in-out;
+    }
+    li button:hover {
+      background: hsl(25, 97%, 53%);
+      color: white;
+      cursor: pointer;
+    }
+    li button:focus {
+      background:hsl(216, 12%, 54%);
+      color: white;
+    }
+    
+    button {
+      width: 100%;
+      background: hsl(25, 97%, 53%);
+      border: none;
+      color: white;
+      padding: 0.875rem 0;
+      border-radius: 30px;
+      text-transform: uppercase;
+      font-size: 10px;
+      font-weight: bold;
+      letter-spacing: 3px;
+      /* margin-bottom: 32px; */
+      transition: 300ms ease-in-out;
+    }
+    button:hover {
+      background: white;
+      color:hsl(25, 97%, 53%);
+      cursor: pointer;
+    }
+    
+
+    .thanks {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    
+      padding: 30px 25px 40px 25px;
+      text-align: center;
+    }
+    .thanks img {
+      margin: 0 auto 2rem;    
+    }
+    .thanks .text {
+      color: hsl(216, 12%, 54%);
+      margin: auto;
+      font-size: 0.8rem;
+    }
+    .thanks .selected {
+      font-size: 0.9rem;
+      padding: 6px 13px;
+      color:hsl(25, 97%, 53%);
+      background:hsl(213, 19%, 18%);
+      border-radius: 30px;
+      margin-bottom: 30px;
+    }
+    
+    .thanks h2 {
+      margin-bottom: 20px;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    @media (min-width: 375px) and (max-width: 1440px) {
+      .rating, .thanks {
+            height: 420px;
+            width: 415px;
+            padding: 35px;
+      }
+      #starIcon, .rating .text, .numbs, #submit {
+        margin-bottom: 35px;
+      }
+      li button {
+        width: 55px;
+        height: 55px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      .thanks .text {
+        font-size: 15px;
+      }
+     
+    }
+    </style>
+</head>
+<body>
+
+  <main>
+    <div class="rating">
+      <p id="starIcon"><img src="images/icon-star.svg" alt="starIcon"></p>
+      <h1> How did we do? </h1>
+      <p class="text"> Please let us know how we did with your support request. All feedback is appreciated 
+        to help us improve our offering!</p>
+
+      <ul class="numbers">
+          <li><button class="numbs">1</button></li>
+          <li><button class="numbs">2</button></li>
+          <li><button class="numbs">3</button></li>
+          <li><button class="numbs">4</button></li>
+          <li><button class="numbs">5</button></li>
+      </ul>
+
+      <button id="submit">Submit</button>
+    </div>
+
+    <div class="thanks hidden">
+
+      <img src="images/illustration-thank-you.svg" alt="" srcset="">
+
+      <p class="selected"> You selected 
+
+        <span id="rated"> </span>
+
+          out of 5
+      </p>
+
+      <h2> Thank you! </h2>
+
+      <p class="text">We appreciate you taking the time to give a rating. If you ever need more support, 
+        don’t hesitate to get in touch!</p>
+
+    </div> 
+
+  </main>
+
+  <script> 
+   
+    const submitBttn = document.querySelector('#submit'),
+        thankU = document.querySelector('.thanks'),
+        rating = document.querySelector('.rating');
+
+        
+        submitBttn.addEventListener('click',() => {
+          
+          if (thankU.classList.contains('hidden')){
+            thankU.classList.remove('hidden')
+            rating.classList.add('hidden')
+          }
+        })
+        
+      const rated = document.querySelector('#rated'),
+            numbers = document.querySelectorAll('.numbs');
+    
+      numbers.forEach((parNumb) => {
+        parNumb.addEventListener('click', () => {
+          rated.textContent = parNumb.textContent
+      })
+    })
+
+  </script>
+</body>
+</html>
