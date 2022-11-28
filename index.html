@@ -21,6 +21,7 @@
       margin: 0;
       padding: 0;
       box-sizing: inherit;
+      text-decoration: none;
     }
     body{
       display: flex;
@@ -42,15 +43,14 @@
       color: white;
     }
     .rating, .thanks {
-      height: 360px;
+      min-height: 360px;
       width: 325px;
       background: hsl(215, 21%, 16%);
       border-radius: 20px;
       padding: 25px;
     }
 
-    
-    
+
     .rating .text {
       color: hsl(216, 12%, 54%);
       margin-bottom: 32px;
@@ -77,9 +77,10 @@
       list-style: none; 
       text-align: center;
     }
-    li button {
+    .numbs {
       width: 45px;
       height: 45px;
+      border: none;
       border-radius: 50%;
       background: hsl(213, 19%, 18%);
       color:hsl(216, 12%, 54%);
@@ -91,12 +92,12 @@
       color: white;
       cursor: pointer;
     }
-    li button:focus {
+    li button:active {
       background:hsl(216, 12%, 54%);
       color: white;
     }
     
-    button {
+    #submit, #back {
       width: 100%;
       background: hsl(25, 97%, 53%);
       border: none;
@@ -110,12 +111,14 @@
       /* margin-bottom: 32px; */
       transition: 300ms ease-in-out;
     }
-    button:hover {
+    #back {
+      margin-top: 25px;
+    }
+    #submit:hover, #back:hover {
       background: white;
       color:hsl(25, 97%, 53%);
       cursor: pointer;
     }
-    
 
     .thanks {
       display: flex;
@@ -152,7 +155,7 @@
     
     @media (min-width: 375px) and (max-width: 1440px) {
       .rating, .thanks {
-            height: 420px;
+            min-height: 420px;
             width: 415px;
             padding: 35px;
       }
@@ -171,6 +174,12 @@
       }
      
     }
+    /* focus mi nefunguje?, tak přes js */
+    .classa {
+      background-color: hsl(216, 12%, 54%);
+      color: white;
+    }
+
     </style>
 </head>
 <body>
@@ -209,12 +218,31 @@
       <p class="text">We appreciate you taking the time to give a rating. If you ever need more support, 
         don’t hesitate to get in touch!</p>
 
+      <a href="index.html" id="back">Back</a>
     </div> 
 
   </main>
 
   <script> 
-   
+
+   const rated = document.querySelector('#rated'),
+         numbers = document.querySelectorAll('.numbs');
+   numbers.forEach((parNumb) => {
+
+     parNumb.addEventListener('click', () => {
+
+       //nefunguje :focus v css, tak takhle
+       numbers.forEach((par) => {
+         par.classList.remove("classa")
+       })
+
+       parNumb.classList.toggle("classa")
+       
+       rated.textContent = parNumb.textContent
+       
+   })
+ })
+
     const submitBttn = document.querySelector('#submit'),
         thankU = document.querySelector('.thanks'),
         rating = document.querySelector('.rating');
@@ -222,20 +250,15 @@
         
         submitBttn.addEventListener('click',() => {
           
-          if (thankU.classList.contains('hidden')){
+          if (thankU.classList.contains('hidden') && rated.textContent !== " "){
             thankU.classList.remove('hidden')
             rating.classList.add('hidden')
           }
         })
         
-      const rated = document.querySelector('#rated'),
-            numbers = document.querySelectorAll('.numbs');
+      
     
-      numbers.forEach((parNumb) => {
-        parNumb.addEventListener('click', () => {
-          rated.textContent = parNumb.textContent
-      })
-    })
+      
 
   </script>
 </body>
